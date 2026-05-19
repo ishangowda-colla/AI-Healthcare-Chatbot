@@ -248,14 +248,14 @@ npm start
 
 ## 👥 Team
 
-| Name        | Role                          |
-|-------------|-------------------------------|
-| [Name 1]    | Backend API & Database        |
-| [Name 2]    | React Frontend & UI/UX        |
-| [Name 3]    | NLP Engine & Image Analysis   |
-| [Name 4]    | Testing & Documentation       |
+| Name                | Role                          |
+|-------------        |-------------------------------|
+| [Nikhil A R]        | Backend API & Database        |
+| [Chidu Kumar H K]   | React Frontend & UI/UX        |
+| [Darshan Gowda S S] | NLP Engine & Image Analysis   |
+| [Farhan Yunus]      | Testing & Documentation       |
 
-**Guide:** [Guide Name], CS&E Dept, RIT Hassan
+**Guide:** [Mrs Nanditha S R], CS&E Dept, RIT Hassan
 
 ---
 
