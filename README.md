@@ -1,5 +1,6 @@
 # MediBot — AI Healthcare Assistant
-## Final Year Project · CS&E Department · RIT Hassan · 2024–25
+## Final Year Project · CS&E Department · RIT Hassan · 2025–26
+
 
 ---
 
