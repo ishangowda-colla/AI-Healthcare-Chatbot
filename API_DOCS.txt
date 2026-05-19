@@ -1,0 +1,99 @@
+# MediBot REST API — Documentation
+# Base URL: http://localhost:5000/api
+# All protected routes require: Authorization: Bearer <token>
+
+### ── HEALTH CHECK ────────────────────────────────────────
+GET  /api/health
+→ { status, service, version, endpoints[] }
+
+### ── AUTH ───────────────────────────────────────────────
+POST /api/auth/register
+Body: { username, email, password }
+→ { token, user: { id, username, email } }
+
+POST /api/auth/login
+Body: { username, password }
+→ { token, user: { id, username, email } }
+
+GET  /api/auth/me  [AUTH]
+→ { id, username, email, created_at }
+
+### ── CHAT ───────────────────────────────────────────────
+POST /api/chat  [AUTH]
+Body: { message: string, lang: "en"|"hi"|"kn" }
+→ (greeting)   { type, message, lang }
+→ (emergency)  { type, message, lang }
+→ (clarify)    { type, message, lang }
+→ (diagnosis)  { type, message, top_disease, severity, icon,
+                  color, precautions[], common_meds[],
+                  matches[{disease,score,severity,icon,color}], lang }
+
+GET  /api/chat/history?limit=50  [AUTH]
+→ { history: [{ role, message, lang, created_at }] }
+
+DELETE /api/chat/history  [AUTH]
+→ { message: "Chat history cleared" }
+
+### ── TABLETS ─────────────────────────────────────────────
+GET  /api/tablets  [AUTH]
+→ { tablets: [{ id, user_id, name, time, taken, date }] }
+
+POST /api/tablets  [AUTH]
+Body: { name: string, time: "HH:MM" }
+→ { id, user_id, name, time, taken, date }  201
+
+PATCH /api/tablets/:id  [AUTH]
+Body: { taken: boolean }
+→ { id, user_id, name, time, taken, date }
+
+DELETE /api/tablets/:id  [AUTH]
+→ { message: "Deleted" }
+
+### ── WATER ──────────────────────────────────────────────
+GET  /api/water  [AUTH]
+→ { glasses, date, goal: 8 }
+
+PUT  /api/water  [AUTH]
+Body: { glasses: number }
+→ { glasses, date, goal: 8, achieved: boolean }
+
+### ── BMI ────────────────────────────────────────────────
+POST /api/bmi  [AUTH]
+Body: { weight: kg, height: cm, lang: "en"|"hi"|"kn" }
+→ { bmi, category, color, weight, height }
+
+GET  /api/bmi/history  [AUTH]
+→ { history: [{ id, bmi, category, weight, height, recorded_at }] }
+
+### ── VITALS ─────────────────────────────────────────────
+GET  /api/vitals  [AUTH]
+→ { latest: {...}, history: [{...}] }
+
+POST /api/vitals  [AUTH]
+Body: { temperature?, heart_rate?, bp_systolic?, bp_diastolic?, spo2?, blood_sugar? }
+→ { id, user_id, temperature, heart_rate, ... recorded_at }  201
+
+### ── IMAGE ANALYSIS ─────────────────────────────────────
+POST /api/analyze-image  [AUTH]
+Form-data: image=<file>, lang=en|hi|kn
+→ { condition, severity, advice, stats:{hue,saturation,brightness}, image_url }
+
+### ── MISC ───────────────────────────────────────────────
+GET  /api/tips?lang=en
+→ { tips: [string] }
+
+GET  /api/diseases
+→ { diseases: [{name, severity, icon, color, symptom_count}], total }
+
+GET  /api/diseases/:name?lang=en
+→ { name, severity, icon, color, symptoms[], advice, precautions[], common_meds[] }
+
+GET  /api/dashboard  [AUTH]
+→ { water:{glasses,goal}, tablets:{total,taken},
+    chat_sessions, latest_bmi, latest_vitals, date }
+
+### ── ERROR RESPONSES ────────────────────────────────────
+400 → { error: "Bad request message" }
+401 → { error: "Unauthorized. Please login." }
+404 → { error: "Not found" }
+409 → { error: "Username or email already exists" }
