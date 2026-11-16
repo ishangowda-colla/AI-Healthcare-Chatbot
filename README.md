@@ -251,8 +251,8 @@ npm start
 | Name                | Role                          |
 |-------------        |-------------------------------|
 | [Nikhil A R]        | Backend API & Database        |
-| [Chidu Kumar H K]   | React Frontend & UI/UX        |
-| [Darshan Gowda S S] | NLP Engine & Image Analysis   |
+| [Chidu Kumar H K]   | NLP Engine & Image Analysis       |
+| [Darshan Gowda S S] | Frontend & UI/UX   |
 | [Farhan Yunus]      | Testing & Documentation       |
 
 **Guide:** [Mrs Nanditha S R], CS&E Dept, RIT Hassan
